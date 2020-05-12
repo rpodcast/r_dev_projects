@@ -23,7 +23,7 @@ RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
     #
     # install git iproute2, process tools, lsb-release (common in install instructions for CLIs) and libzip for R Tools extension
-    && apt-get -y install git openssh-client less iproute2 procps lsb-release libzip-dev libssl-dev libxml2-dev libcurl4-openssl-dev python3-pip pandoc \
+    && apt-get -y install git openssh-client less iproute2 procps lsb-release libzip-dev libssl-dev libxml2-dev libcurl4-openssl-dev python3-pip pandoc libfreetype6-dev \
     #
     # install R packages needed for vscode interaction and package management
     && install.r languageserver renv \
