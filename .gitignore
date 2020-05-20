@@ -5,3 +5,8 @@
 !README.md
 !.devcontainer/
 !.gitignore
+!.dockerignore
+!rstudio_config_dir/
+!rstudio_docker/
+!docker-compose.yml
+

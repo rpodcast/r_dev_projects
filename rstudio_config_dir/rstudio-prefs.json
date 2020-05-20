@@ -1,0 +1,34 @@
+{
+    "panes": {
+        "quadrants": [
+            "Source",
+            "TabSet1",
+            "Console",
+            "TabSet2"
+        ],
+        "tabSet1": [
+            "History",
+            "Presentation"
+        ],
+        "tabSet2": [
+            "Environment",
+            "Files",
+            "Plots",
+            "Connections",
+            "Packages",
+            "Help",
+            "Build",
+            "VCS",
+            "Tutorial",
+            "Viewer"
+        ],
+        "console_left_on_top": false,
+        "console_right_on_top": true
+    },
+    "save_workspace": "never",
+    "load_workspace": false,
+    "auto_append_newline": true,
+    "font_size_points": 12,
+    "editor_theme": "Tomorrow Night 80s",
+    "posix_terminal_shell": "bash"
+}

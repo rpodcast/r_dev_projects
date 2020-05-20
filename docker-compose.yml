@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  rstudioserver:
+    image: rocker/rstudio:3.6.3
+    container_name: rstudioserver
+    volumes:
+      - /home/eric/r_dev_projects:/r_dev_projects
+      - /opt/local/renv/cache:/renv/cache
+    ports:
+      - 8787:8787
+    environment:
+      - RENV_PATHS_CACHE_HOST=${RENV_PATHS_CACHE_HOST}
+      - RENV_PATHS_CACHE_CONTAINER=${RENV_PATHS_CACHE_CONTAINER}
+      - RENV_PATHS_CACHE=${RENV_PATHS_CACHE}
+      - USER=${USER}
+      - USERID=${USERID}
+      - GROUPID=${GROUPID}
+      - PASSWORD=${PASSWORD}
+  rstudiopreview:
+    build:
+      context: ./rstudio_docker
+    container_name: rstudiopreview
+    volumes:
+      - /home/eric/r_dev_projects:/home/eric/r_dev_projects
+      - /home/eric/.ssh:/home/eric/.ssh
+      - /opt/local/renv/cache:/renv/cache
+      - /home/eric/r_dev_projects/rstudio_config_dir:/home/eric/.config/rstudio
+    ports:
+      - 8686:8787
+    environment:
+      - RENV_PATHS_CACHE_HOST=${RENV_PATHS_CACHE_HOST}
+      - RENV_PATHS_CACHE_CONTAINER=${RENV_PATHS_CACHE_CONTAINER}
+      - RENV_PATHS_CACHE=${RENV_PATHS_CACHE}
+      - USER=${USER}
+      - USERID=${USERID}
+      - GROUPID=${GROUPID}
+      - PASSWORD=${PASSWORD}
+
