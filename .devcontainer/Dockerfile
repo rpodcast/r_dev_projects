@@ -2,7 +2,8 @@
 # Adapted from https://github.com/microsoft/vscode-dev-containers/tree/v0.112.0/containers/r/.devcontainer (MIT license)
 #------------------------------------------------------------------------------------------------------------------------
 
-FROM rocker/r-apt:bionic
+#FROM rocker/r-apt:bionic
+FROM rocker/r-ver:latest
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
