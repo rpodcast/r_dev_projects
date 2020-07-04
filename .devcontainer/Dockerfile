@@ -21,19 +21,21 @@ ARG USER_GID=$USER_UID
 
 # Configure apt and install packages
 RUN apt-get update \
-    && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
+    && apt-get -y install --no-install-recommends apt-utils wget dialog software-properties-common 2>&1 \
     #
     # install git iproute2, process tools, lsb-release (common in install instructions for CLIs) and libzip for R Tools extension
-    && apt-get -y install git openssh-client less iproute2 procps lsb-release libzip-dev libssl-dev libxml2-dev libcurl4-openssl-dev python3-pip pandoc libfreetype6-dev \
+    && apt-get -y install git openssh-client less iproute2 procps lsb-release libzip-dev libssl-dev libxml2-dev libcurl4-openssl-dev python3-pip pandoc libfreetype6-dev libfontconfig1-dev \
     #
     # install R packages needed for vscode interaction and package management
-    && install.r languageserver renv \
+    && install2.r languageserver renv remotes \
+    #
+    && installGithub.r nx10/httpgd \
     #
     # install radian via python and pip3
     && pip3 install radian \
     #
     # Register Microsoft key and feed
-    && wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
+    && wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     #
     # Install the .NET Runtime
@@ -44,8 +46,8 @@ RUN apt-get update \
     #
     # I do not plan on using the docker user, so I need to change the gid and uid to different values
     # in order to let my user have the same gid and uid as my local computer
-    && groupmod docker --gid 1005 \
-    && usermod --uid 1005 docker \
+    #&& groupmod docker --gid 1005 \
+    #&& usermod --uid 1005 docker \
     && groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
     #
