@@ -7,10 +7,11 @@
 # Syntax: ./common-debian.sh [install zsh flag] [username] [user UID] [user GID] [upgrade packages flag]
 
 INSTALL_ZSH=${1:-"true"}
-USERNAME=${2:-"vscode"}
-USER_UID=${3:-1000}
-USER_GID=${4:-1000}
-UPGRADE_PACKAGES=${5:-"true"}
+INSTALL_FISH=${2:-"true"}
+USERNAME=${3:-"vscode"}
+USER_UID=${4:-1000}
+USER_GID=${5:-1000}
+UPGRADE_PACKAGES=${6:-"true"}
 
 set -e
 
@@ -161,6 +162,21 @@ if [ "${INSTALL_ZSH}" = "true" ] && [ ! -d "/root/.oh-my-zsh" ] && [ "${ZSH_ALRE
     ZSH_ALREADY_INSTALLED="true"
 fi
 
+# Optionally install and configure fish
+if [ "${INSTALL_FISH}" = "true" ] && [ "${FISH_ALREADY_INSTALLED}" != "true" ]; then
+    apt-get-update-if-needed
+    apt-get install -y fish
+    #curl -fsSLo- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash 2>&1
+    #echo "export PATH=\$PATH:\$HOME/.local/bin" >> /root/.zshrc
+    #if [ "${USERNAME}" != "root" ]; then
+    #    cp -fR /root/.oh-my-zsh /home/$USERNAME
+    #    cp -f /root/.zshrc /home/$USERNAME
+    #    sed -i -e "s/\/root\/.oh-my-zsh/\/home\/$USERNAME\/.oh-my-zsh/g" /home/$USERNAME/.zshrc
+    #    chown -R $USER_UID:$USER_GID /home/$USERNAME/.oh-my-zsh /home/$USERNAME/.zshrc
+    #fi
+    FISH_ALREADY_INSTALLED="true"
+fi
+
 # Write marker file
 mkdir -p "$(dirname "${MARKER_FILE}")"
 echo -e "\
@@ -168,4 +184,5 @@ echo -e "\
     LOCALE_ALREADY_SET=${LOCALE_ALREADY_SET}\n\
     EXISTING_NON_ROOT_USER=${EXISTING_NON_ROOT_USER}\n\
     DOT_LOCAL_ALREADY_ADDED=${DOT_LOCAL_ALREADY_ADDED}\n\
-    ZSH_ALREADY_INSTALLED=${ZSH_ALREADY_INSTALLED}" > "${MARKER_FILE}"
+    ZSH_ALREADY_INSTALLED=${ZSH_ALREADY_INSTALLED}\n\
+    FISH_ALREADY_INSTALLED=${FISH_ALREADY_INSTALLED}" > "${MARKER_FILE}"
