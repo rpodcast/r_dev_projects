@@ -10,3 +10,4 @@
 !rstudio_docker/
 !docker-compose.yml
 
+.Rproj.user

@@ -1,20 +1,64 @@
-FROM rocker/rstudio
+##################################################################################################################################################################
+# Adapted from following:
+# - Rocker RStudio container using new versioned paradigm: https://github.com/rocker-org/rocker-versioned2/blob/master/dockerfiles/Dockerfile_rstudio_4.0.2
+# - license: GPLV2
+##################################################################################################################################################################
 
-ARG USERNAME="eric"
+FROM rocker/r-ver:4.0.2
 
-# create .ssh directory in user area
-#RUN mkdir -p /home/$USERNAME/.ssh \
-#  && chmod -R 600 /home/$USERNAME/.ssh \
-#  && chown -R $USERNAME:$USERNAME /home/$USERNAME/.ssh
+LABEL org.label-schema.license="GPL-2.0" \
+      org.label-schema.vcs-url="https://github.com/rocker-org/rocker-versioned" \
+      org.label-schema.vendor="Rocker Project" \
+      maintainer="Carl Boettiger <cboettig@ropensci.org>"
 
+ENV S6_VERSION=v1.21.7.0
+ENV RSTUDIO_VERSION=preview
+ENV PATH=/usr/lib/rstudio-server/bin:$PATH
+
+# install key dependencies of rstudio preview edition
+# install radian via python and pip3
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-    libxml2-dev libssl-dev procps rrdtool libclang-dev libcurl4-openssl-dev libfreetype6-dev openssh-client \
-  && wget --no-check-certificate \
-    https://s3.amazonaws.com/rstudio-ide-build/server/bionic/amd64/rstudio-server-1.3.958-amd64.deb
+    && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends libpq5 openssh-client
 
-RUN dpkg -i rstudio-server-1.3.958-amd64.deb \
-  && rm rstudio-server-*-amd64.deb \
-  && ln -s -f /usr/lib/rstudio-server/bin/pandoc/pandoc /usr/local/bin \
-  && ln -s -f /usr/lib/rstudio-server/bin/pandoc/pandoc-citeproc /usr/local/bin \
-  && apt-get clean
+RUN /rocker_scripts/install_rstudio.sh
+RUN /rocker_scripts/install_pandoc.sh
+
+# install key dependencies of certain packages that could be installed later
+RUN apt-get update \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends libxml2-dev libsodium-dev libssl-dev imagemagick libmagick++-dev libgit2-dev libssh2-1-dev zlib1g-dev librsvg2-dev libudunits2-dev libfontconfig1-dev libfreetype6-dev 
+
+# install R packages needed for VSCode interaction and package management
+RUN install2.r languageserver renv remotes
+
+# install radian via python and pip3
+RUN apt-get update \
+    && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends python3-setuptools python3-pip
+
+RUN pip3 install radian
+
+RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
+
+EXPOSE 8787
+
+CMD ["/init"]
+
+# FROM rocker/rstudio:4.0.2
+
+# # install R packages needed for VSCode interaction and package management
+# RUN install2.r languageserver renv remotes
+
+# # install radian via python and pip3
+# RUN apt-get update \
+#     && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends python3-setuptools python3-pip
+
+# RUN pip3 install radian
+
+# RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
+
+# EXPOSE 8787
+
+# CMD ["/init"]
