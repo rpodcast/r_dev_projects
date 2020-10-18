@@ -1,7 +1,7 @@
-# blacklist all files except those that are specified
+# ignore all files/folders in this directory  except those that are specified below
 /*
 
-# whitelist following files
+# include following files
 !README.md
 !.devcontainer/
 !.gitignore
