@@ -19,7 +19,7 @@ ENV PATH=/usr/lib/rstudio-server/bin:$PATH
 # install radian via python and pip3
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends libpq5 openssh-client
+    && apt-get -y install --no-install-recommends libpq5 openssh-client openssh-server
 
 RUN /rocker_scripts/install_rstudio.sh
 RUN /rocker_scripts/install_pandoc.sh
