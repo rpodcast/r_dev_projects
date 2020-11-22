@@ -13,14 +13,4 @@ services:
     ports:
       - 8686:8787
     env_file: ./rstudio_docker/rstudio.env
-  rstudiotest:
-    image: rocker/rstudio:4.0.2
-    container_name: rstudiotest
-    volumes:
-      - /home/eric/r_dev_projects:/home/eric/r_dev_projects
-      - /home/eric/.ssh:/home/eric/.ssh
-      - /opt/local/renv/cache:/renv/cache
-      - /home/eric/r_dev_projects/rstudio_config_dir:/home/eric/.config/rstudio
-    ports:
-      - 8585:8787
-    env_file: ./rstudio_docker/rstudio.env
+
