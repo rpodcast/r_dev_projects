@@ -6,11 +6,6 @@
 
 FROM rocker/r-ver:4.0.2
 
-LABEL org.label-schema.license="GPL-2.0" \
-      org.label-schema.vcs-url="https://github.com/rocker-org/rocker-versioned" \
-      org.label-schema.vendor="Rocker Project" \
-      maintainer="Carl Boettiger <cboettig@ropensci.org>"
-
 ENV S6_VERSION=v1.21.7.0
 ENV RSTUDIO_VERSION=preview
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
@@ -44,21 +39,3 @@ RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
 EXPOSE 8787
 
 CMD ["/init"]
-
-# FROM rocker/rstudio:4.0.2
-
-# # install R packages needed for VSCode interaction and package management
-# RUN install2.r languageserver renv remotes
-
-# # install radian via python and pip3
-# RUN apt-get update \
-#     && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends python3-setuptools python3-pip
-
-# RUN pip3 install radian
-
-# RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
-
-# EXPOSE 8787
-
-# CMD ["/init"]
