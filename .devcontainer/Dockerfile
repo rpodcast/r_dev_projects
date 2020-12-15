@@ -50,8 +50,12 @@ RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-p
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-transport-https \
     && apt-get -y install --no-install-recommends dotnet-sdk-3.1
-    
+
+# ensure that the renv package cache env var is accessible in default R installation
 RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
+
+# copy the modified .Rprofile template to the renv cache
+COPY library-scripts/.Rprofile-vscode /renv/cache/.Rprofile-vscode
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
