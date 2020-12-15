@@ -6,13 +6,6 @@
 		"dockerfile": "Dockerfile",
 	},
 	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
-	
-	// Set environment variables for container
-	//"containerEnv": {
-	//	"RENV_PATHS_CACHE_HOST": "/opt/local/renv/cache",
-	//	"RENV_PATHS_CACHE_CONTAINER": "/renv/cache",
-	//	"RENV_PATHS_CACHE": "/renv/cache"
-	//},
 
 	// Add more local mounts to container
 	"mounts": [
@@ -40,7 +33,8 @@
 		"ikuyadeu.r",
 		//"mikhail-arkhipov.r",
 		"REditorSupport.r-lsp",
-		"GrapeCity.gc-excelviewer"
+		"GrapeCity.gc-excelviewer",
+		"Mohamed-El-Fodil-Ihaddaden.shinysnip"
 	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
