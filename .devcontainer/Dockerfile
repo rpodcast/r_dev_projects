@@ -57,6 +57,11 @@ RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
 # copy the modified .Rprofile template to the renv cache
 COPY library-scripts/.Rprofile-vscode /renv/cache/.Rprofile-vscode
 
+# [Optional] Uncomment this section to add addtional system dependencies needed for project
+# RUN apt-get update \
+#     && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends ---packages list----
+
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
 
