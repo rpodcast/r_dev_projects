@@ -21,7 +21,7 @@ if (Sys.getenv("TERM_PROGRAM") == "vscode") {
         renv::install("nx10/httpgd")
     }
 
-    if (!"vscDebugger %in% lib_packages) {
+    if (!"vscDebugger" %in% lib_packages) {
         message("installation vscDebugger package")
         renv::install("ManuelHentschel/vscDebugger@v0.4.3")
     }
@@ -29,7 +29,7 @@ if (Sys.getenv("TERM_PROGRAM") == "vscode") {
     # use the new httpgd plotting device
     options(vsc.plot = FALSE)
     options(device = function(...) {
-      httpgd::httpgd()
-      .vsc.browser(httpgd::httpgdURL(), viewer = "Beside")
+      httpgd:::httpgd()
+      .vsc.browser(httpgd::hgd_url(), viewer = "Beside")
     })
 }
