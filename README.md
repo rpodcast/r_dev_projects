@@ -13,7 +13,7 @@ This repo contains the various configurations, container settings, and other set
 * Install Visual Studio Code. Downloads and more information can be found at [code.visualstudio.com](https://code.visualstudio.com)
      + Install the [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) 
      + Install the [Docker Extension Pack](https://marketplace.visualstudio.com/items?itemName=formulahendry.docker-extension-pack) (while not necessarily required, I find it very useful for managing my containers inside the IDE) 
-     + If you use SSH keys with your online code repository account (for example GitHub or GitLab) you need to share your key with containers built.  The process is documented at on the VSCode docs [here](https://code.visualstudio.com/docs/remote/containers#_sharing-git-credentials-with-your-container). For my setup, I have to run this once before launching VSCode: `ssh-add ~/.ssh/{name_of_key}`.  I have a custom key but I would imaging most users will have a default key name of `id_rsa`.
+     + If you use SSH keys with your online code repository account (for example GitHub or GitLab) you need to share your key with containers built.  The process is documented at on the VSCode docs [here](https://code.visualstudio.com/docs/remote/containers#_sharing-git-credentials-with-your-container). For my setup, I have to run this once before launching VSCode: `ssh-add ~/.ssh/{name_of_key}`.  I have a custom key but I would imagine most users will have a default key name of `id_rsa`.
 
 ## Visual Studio Code Setup
 
@@ -55,14 +55,13 @@ RENV_PATHS_CACHE=/renv/cache
 
 ## Using Renv with VS-Code
 
-One (intentional) effect of using `renv` is that out of the box the project's package library will not link to packages in the default library that are not included in the base installation of R. The interactions between an R session and VS-Code are largely driven by the [`{launguageserver}`](https://github.com/REditorSupport/languageserver) package available on CRAN. My solution to ensure any project with `renv` enabled can use all of the same integrations with VS-Code is to create a custom `.Rprofile` that contains certain triggers to bootstrap the installation of `languageserver` and perform necessary environment configurations if the session detects that the `TERM_PROGRAM` environment variable is set to `vscode`. The file `.devcontainer/library-scripts/.Rprofile-vscode` is automatically copied to the container's `renv` cache directory, and can be manually copied to overwrite the current project's `.Rprofile` file.  Much of this solution was adapted from ideas discussed in issue [vscode-R/259](https://github.com/Ikuyadeu/vscode-R/issues/259). The contents are below:
+One (intentional) effect of using `renv` is that out of the box the project's package library will not link to packages in the default library that are not included in the base installation of R. The interactions between an R session and VS-Code are largely driven by the [`{launguageserver}`](https://github.com/REditorSupport/languageserver) package available on CRAN. My solution to ensure any project with `renv` enabled can use all of the same integrations with VS-Code is to create a custom `.Rprofile` that contains certain triggers to bootstrap the installation of `languageserver` and perform necessary environment configurations if the session detects that the `TERM_PROGRAM` environment variable is set to `vscode`. The file [`.devcontainer/library-scripts/.Rprofile-vscode`](https://github.com/rpodcast/r_dev_projects/blob/master/.devcontainer/library-scripts/.Rprofile-vscode) is automatically copied to the container's `renv` cache directory, and can be manually copied to overwrite the current project's `.Rprofile` file.  Much of this solution was adapted from ideas discussed in issue [vscode-R/259](https://github.com/Ikuyadeu/vscode-R/issues/259). The contents are below:
 
 ```r
 # setup if using with vscode and R plugin
 if (Sys.getenv("TERM_PROGRAM") == "vscode") {
     source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))
 }
-
 source("renv/activate.R")
 
 if (Sys.getenv("TERM_PROGRAM") == "vscode") {
@@ -76,11 +75,23 @@ if (Sys.getenv("TERM_PROGRAM") == "vscode") {
         message("installing languageserver package")
         renv::install("languageserver")
     }
-
+    
     if (!"httpgd" %in% lib_packages) {
         message("installing httpgd package")
         renv::install("nx10/httpgd")
     }
+
+    if (!"vscDebugger %in% lib_packages) {
+        message("installation vscDebugger package")
+        renv::install("ManuelHentschel/vscDebugger@v0.4.3")
+    }
+
+    # use the new httpgd plotting device
+    options(vsc.plot = FALSE)
+    options(device = function(...) {
+      httpgd::httpgd()
+      .vsc.browser(httpgd::httpgdURL(), viewer = "Beside")
+    })
 }
 ```
 
