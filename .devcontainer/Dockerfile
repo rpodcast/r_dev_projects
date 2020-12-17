@@ -55,7 +55,7 @@ RUN apt-get update \
 RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
 
 # copy the modified .Rprofile template to the renv cache
-COPY library-scripts/.Rprofile-vscode /renv/cache/.Rprofile-vscode
+COPY library-scripts/.Rprofile-vscode /renv/.Rprofile-vscode
 
 # [Optional] Uncomment this section to add addtional system dependencies needed for project
 # RUN apt-get update \
