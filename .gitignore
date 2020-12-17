@@ -3,6 +3,7 @@
 
 # include following files
 !README.md
+!CODE_OF_CONDUCT.md
 !.devcontainer/
 !.gitignore
 !.dockerignore
