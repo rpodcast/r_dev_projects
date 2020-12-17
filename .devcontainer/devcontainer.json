@@ -34,7 +34,8 @@
 		//"mikhail-arkhipov.r",
 		"REditorSupport.r-lsp",
 		"GrapeCity.gc-excelviewer",
-		"Mohamed-El-Fodil-Ihaddaden.shinysnip"
+		"Mohamed-El-Fodil-Ihaddaden.shinysnip",
+		"RDebugger.r-debugger"
 	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
