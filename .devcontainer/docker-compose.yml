@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  rstudiopreview:
+    build:
+      context: ./rstudio_docker
+    container_name: rstudiopreview
+    volumes:
+      - ${VOLUME_PATH}:${VOLUME_PATH}
+      - /home/${USER}/.ssh:/home/${USER}/.ssh
+      - ${RENV_PATHS_CACHE_HOST}:${RENV_PATHS_CACHE_CONTAINER}
+      - ${VOLUME_PATH}/.devcontainer/rstudio_config_dir:/home/${USER}/.config/rstudio
+    restart:
+      unless-stopped
+    ports:
+      - 8686:8787
+    env_file: .env
+
