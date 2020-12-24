@@ -6,13 +6,13 @@ services:
       context: ./rstudio_docker
     container_name: rstudiopreview
     volumes:
-      - /home/eric/r_dev_projects:/home/eric/r_dev_projects
-      - /home/eric/.ssh:/home/eric/.ssh
-      - /opt/local/renv/cache:/renv/cache
-      - /home/eric/r_dev_projects/rstudio_config_dir:/home/eric/.config/rstudio
+      - ${VOLUME_PATH}:${VOLUME_PATH}
+      - /home/${USER}/.ssh:/home/${USER}/.ssh
+      - ${RENV_PATHS_CACHE_HOST}:${RENV_PATHS_CACHE_CONTAINER}
+      - ${VOLUME_PATH}/.devcontainer/rstudio_config_dir:/home/${USER}/.config/rstudio
     restart:
       unless-stopped
     ports:
       - 8686:8787
-    env_file: ./rstudio_docker/rstudio.env
+    env_file: .env
 
