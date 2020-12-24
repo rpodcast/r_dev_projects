@@ -30,7 +30,8 @@
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"ikuyadeu.r",
+		//"ikuyadeu.r",
+		"/renv/cache/r-latest.vslx",
 		//"mikhail-arkhipov.r",
 		"REditorSupport.r-lsp",
 		"GrapeCity.gc-excelviewer",
