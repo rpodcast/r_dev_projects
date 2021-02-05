@@ -25,13 +25,14 @@
 		],
 		"r.autoDetect": "false",
 		"r.terminalPath": "/usr/local/bin/radian",
-		"r.interpreterPath": "/usr/local/bin/R"
+		"r.interpreterPath": "/usr/local/bin/R",
+		"r.debugger.timeouts.startup": 8000
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		//"ikuyadeu.r",
-		"/renv/cache/r-latest.vslx",
+		"ikuyadeu.r",
+		//"/renv/cache/r-latest.vslx",
 		//"mikhail-arkhipov.r",
 		"REditorSupport.r-lsp",
 		"GrapeCity.gc-excelviewer",
