@@ -6,6 +6,8 @@ This repo contains the various configurations, container settings, and other set
 * Share a _central_ R  package cache between containers using the [`{renv}`](https://rstudio.github.io/renv/) package management system.
 * Leave no traces of the R installation or system dependencies on the host system. While that sounds a little brazen, I plan on using a custom Linux PC built for media production and I want to keep that system fairly clean and lean!
 
+🎥 Check out this previous [Shiny Developer Series livestream](https://youtu.be/4wRiPG9LM3o) to see my detailed walkthrough!
+
 ## Pre-requisites
 
 * Install Docker for your particular OS. For my development setup, it is Ubuntu 20.04.  Instructions can be found at [docs.docker.com/get-docker](https://docs.docker.com/get-docker/)
