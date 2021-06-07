@@ -1,14 +1,6 @@
-# ignore all files/folders in this directory  except those that are specified below
-/*
-
-# include following files
-!README.md
-!CODE_OF_CONDUCT.md
-!.devcontainer/
-!.gitignore
-!.dockerignore
-!rstudio_config_dir/
-!rstudio_docker/
-!docker-compose.yml
-
+# rstudio-specific files
 .Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
