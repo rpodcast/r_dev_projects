@@ -34,13 +34,15 @@
 		"ikuyadeu.r",
 		//"/renv/cache/r-latest.vslx",
 		//"mikhail-arkhipov.r",
-		"REditorSupport.r-lsp",
+		//"REditorSupport.r-lsp",
 		"GrapeCity.gc-excelviewer",
 		"Mohamed-El-Fodil-Ihaddaden.shinysnip",
 		"hediet.vscode-drawio",
 		"MS-vsliveshare.vsliveshare-pack",
 		"ms-python.python",
-		"RDebugger.r-debugger"
+		"RDebugger.r-debugger",
+		//"GitHub.copilot",
+		"eamodio.gitlens"
 	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
