@@ -18,12 +18,12 @@ if (Sys.getenv("TERM_PROGRAM") == "vscode") {
     
     if (!"httpgd" %in% lib_packages) {
         message("installing httpgd package")
-        renv::install("nx10/httpgd")
+        renv::install("httpgd")
     }
 
     if (!"vscDebugger" %in% lib_packages) {
         message("installation vscDebugger package")
-        renv::install("ManuelHentschel/vscDebugger@v0.4.5")
+        renv::install("ManuelHentschel/vscDebugger@v0.4.7")
     }
 
     # use the new httpgd plotting device
