@@ -2,4 +2,4 @@ linters: with_defaults(
   line_length_linter(120),
   commented_code_linter = NULL,
   object_usage_linter = NULL
-)
+  )
