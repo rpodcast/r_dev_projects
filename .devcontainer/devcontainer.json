@@ -46,7 +46,9 @@
 		"ms-python.python",
 		"RDebugger.r-debugger",
 		//"GitHub.copilot",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"GitHub.vscode-pull-request-github",
+		"hoovercj.vscode-power-mode"
 	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
