@@ -33,8 +33,7 @@ RUN apt-get update \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # install R packages needed for VSCode interaction and package management
-RUN install2.r languageserver renv remotes
-RUN installGithub.r nx10/httpgd
+RUN install2.r languageserver renv remotes httpgd
 
 # install radian via python and pip3
 RUN apt-get update \
