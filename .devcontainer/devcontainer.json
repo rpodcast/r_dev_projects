@@ -17,8 +17,12 @@
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
-		//"terminal.integrated.shell.linux": "/bin/bash",
-		"terminal.integrated.shell.linux": "/usr/bin/fish",
+		"terminal.integrated.profiles.linux": {
+			"fish": {
+				"path": "/usr/bin/fish"
+			}
+		},
+		"terminal.integrated.defaultProfile.linux": "fish",
 		"r.alwaysUseActiveTerminal": true,
   		"r.bracketedPaste": true,
 		"r.sessionWatcher": true,
