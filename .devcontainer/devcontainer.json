@@ -35,7 +35,11 @@
 		"r.interpreterPath": "/usr/local/bin/R",
 		"r.debugger.timeouts.startup": 8000,
 		"editor.wordWrap": "on",
-		"editor.tabSize": 2
+		"editor.tabSize": 2,
+		"path-autocomplete.pathMappings": {
+    			"/": "/",
+    			"./": "${folder}"
+		}
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
