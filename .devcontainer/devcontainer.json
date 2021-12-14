@@ -34,7 +34,8 @@
 		"r.terminalPath": "/usr/local/bin/radian",
 		"r.interpreterPath": "/usr/local/bin/R",
 		"r.debugger.timeouts.startup": 8000,
-		"editor.wordWrap": "on"
+		"editor.wordWrap": "on",
+		"editor.tabSpaces": "2"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
