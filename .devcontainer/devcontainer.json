@@ -39,7 +39,9 @@
 		"path-autocomplete.pathMappings": {
     			"/": "/",
     			"./": "${folder}"
-		}
+		},
+		"editor.bracketPairColorization.enabled": true,
+		"editor.guides.bracketPairs": "active"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
