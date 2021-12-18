@@ -12,8 +12,15 @@
 
 	// Add more local mounts to container
 	"mounts": [
-		"source=/opt/local/renv/cache,target=/renv/cache,type=bind,consistency=cached"
+		"source=/opt/local/renv/cache,target=/renv/cache,type=bind,consistency=cached",
+		"source=/etc/alsa,target=/etc/alsa,type=bind,consistency=cached",
+		"source=/usr/share/alsa,target=/usr/share/alsa,type=bind,consistency=cached",
+		"source=/run/user/1000/pulse/native,target=/run/user/1000/pulse/native,type=bind,consistency=cached"
 	],
+	
+	"containerEnv": {
+		"PULSE_SERVER": "unix:/run/user/1000/pulse/native"
+	},
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
