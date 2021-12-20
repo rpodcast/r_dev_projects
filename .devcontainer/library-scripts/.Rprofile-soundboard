@@ -1,0 +1,15 @@
+# copy (or append) below contents to .Rprofile in project directory
+# function to play audio file
+play_sound <- function(sound_dir = "/soundboard_files", custom_sink = "SoundBoard", wait = FALSE) {
+  audio_file <- sample(list.files(sound_dir, full.names = TRUE), size = 1)
+  play_args <- c(audio_file)
+
+  if (!is.null(custom_sink)) {
+    play_args <- c(play_args, "-d", custom_sink)
+  }
+
+  system2("paplay", args = play_args, wait = wait)
+  invisible(TRUE)
+}
+
+options(error = play_sound)
