@@ -33,7 +33,7 @@ RUN apt-get update \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # install R packages needed for VSCode interaction and package management
-RUN install2.r languageserver renv remotes httpgd
+RUN install2.r languageserver renv remotes httpgd httpuv
 
 # install radian via python and pip3
 RUN apt-get update \
@@ -60,6 +60,18 @@ COPY library-scripts/.Rprofile-vscode /renv/.Rprofile-vscode
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends libpulse0 libasound2 libasound2-plugins pulseaudio-utils
+    
+# install obs-cli (Go version)
+# https://github.com/muesli/obs-cli/releases
+ADD https://github.com/muesli/obs-cli/releases/download/v0.4.0/obs-cli_0.4.0_linux_x86_64.tar.gz /obs-cli-linux.tar.gz
+RUN tar -zxvf obs-cli-linux.tar.gz
+RUN cp /obs-cli /usr/local/bin/obs-cli
+RUN chmod 755 /usr/local/bin/obs-cli
+
+# install obs-cli (Javascript version)
+# https://github.com/leafac/obs-cli/releases
+ADD https://github.com/leafac/obs-cli/releases/download/v2.2.3/obs-cli-linux /usr/local/bin/obs-cli-js
+RUN chmod 755 /usr/local/bin/obs-cli-js
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
