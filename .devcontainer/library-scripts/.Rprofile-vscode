@@ -26,6 +26,13 @@ if (Sys.getenv("TERM_PROGRAM") == "vscode") {
         renv::install("ManuelHentschel/vscDebugger@v0.4.7")
     }
 
+    # use the rstudio addins feature
+    if (!"rstudioapi" %in% lib_packages) {
+        message("installing rstudioapi package")
+        renv::install("rstudioapi")
+    }
+    options(vsc.rstudioapi = TRUE)
+
     # use the new httpgd plotting device
     options(vsc.plot = FALSE)
     options(device = function(...) {
