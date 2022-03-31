@@ -3,7 +3,7 @@
 # licence: MIT
 ###################################################################################################################
 
-FROM rocker/r-ver:4.1.0
+FROM rocker/r-ver:4.1.3
 
 # Options for setup script
 ARG INSTALL_ZSH="false"
@@ -55,6 +55,11 @@ RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
 
 # copy the modified .Rprofile template to the renv cache
 COPY library-scripts/.Rprofile-vscode /renv/.Rprofile-vscode
+
+# [Optional] Uncomment this section to add Quarto to the container
+# customize version number as appropriate
+RUN curl -L https:''github.com/quarto-dev/quarto-cli/releases/download/v0.9.172/quarto-0.9.172-linux-amd64.deb -o /tmp/quarto.deb
+RUN apt-get -y install ./tmp/quarto.deb
 
 # [Optional] Uncomment this section to add Hugo to the container
 # Customize version number as appropriate
