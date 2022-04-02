@@ -76,6 +76,7 @@
 		//"GitHub.copilot",
 		"eamodio.gitlens",
 		"GitHub.vscode-pull-request-github",
+		"quarto.quarto",
 		"hoovercj.vscode-power-mode"
 	]
 
