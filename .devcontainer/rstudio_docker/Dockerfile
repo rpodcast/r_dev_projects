@@ -4,10 +4,10 @@
 # - license: GPLV2
 ##################################################################################################################################################################
 
-FROM rocker/r-ver:4.1.0
+FROM rocker/r-ver:4.1.3
 
 ENV S6_VERSION=v1.21.7.0
-ENV RSTUDIO_VERSION=preview
+ENV RSTUDIO_VERSION=2022.02.1-461
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
 
 # install key dependencies of rstudio preview edition
@@ -22,7 +22,7 @@ RUN /rocker_scripts/install_pandoc.sh
 # install key dependencies of certain packages that could be installed later
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends libxml2-dev libsodium-dev libssl-dev imagemagick libmagick++-dev libgit2-dev libssh2-1-dev zlib1g-dev librsvg2-dev libudunits2-dev libfontconfig1-dev libfreetype6-dev 
+    && apt-get -y install --no-install-recommends libxml2-dev libsodium-dev libssl-dev imagemagick libmagick++-dev libgit2-dev libssh2-1-dev zlib1g-dev librsvg2-dev libudunits2-dev libfontconfig1-dev libfreetype6-dev curl 
 
 # install R packages needed for VSCode interaction and package management
 RUN install2.r languageserver renv remotes
@@ -35,6 +35,11 @@ RUN apt-get update \
 RUN pip3 install radian
 
 RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
+
+# [Optional] Uncomment this section to add Quarto to the container
+# customize version number as appropriate
+RUN curl -L https://github.com/quarto-dev/quarto-cli/releases/download/v0.9.201/quarto-0.9.201-linux-amd64.deb -o /tmp/quarto.deb
+RUN apt-get -y install ./tmp/quarto.deb
 
 # [Optional] Uncomment this section to add addtional system dependencies needed for project
 # RUN apt-get update \
