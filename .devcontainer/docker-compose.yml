@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  rstudiopreview:
+  rstudioquarto:
     build:
       context: ./rstudio_docker
     container_name: ${CONTAINER_NAME}
