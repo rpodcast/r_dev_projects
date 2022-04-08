@@ -10,7 +10,7 @@ ARG INSTALL_ZSH="false"
 ARG INSTALL_FISH="true"
 ARG UPGRADE_PACKAGES="true"
 ARG USERNAME
-ARG QUARTO_VERSION
+ARG QUARTO_VERSION=latest
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -59,8 +59,10 @@ COPY library-scripts/.Rprofile-vscode /renv/.Rprofile-vscode
 
 # [Optional] Uncomment this section to add Quarto to the container
 # customize version number as appropriate
-RUN curl -L https://github.com/quarto-dev/quarto-cli/releases/download/v0.9.201/quarto-0.9.201-linux-amd64.deb -o /tmp/quarto.deb
-RUN apt-get -y install ./tmp/quarto.deb
+RUN /rocker_scripts/install_quarto.sh
+
+#RUN curl -L https://github.com/quarto-dev/quarto-cli/releases/download/v0.9.201/quarto-0.9.201-linux-amd64.deb -o /tmp/quarto.deb
+#RUN apt-get -y install ./tmp/quarto.deb
 
 # [Optional] Uncomment this section to add Hugo to the container
 # Customize version number as appropriate

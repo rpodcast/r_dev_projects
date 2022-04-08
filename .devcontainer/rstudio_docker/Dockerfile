@@ -9,6 +9,7 @@ FROM rocker/r-ver:4.1.3
 ENV S6_VERSION=v1.21.7.0
 ENV RSTUDIO_VERSION=2022.02.1-461
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
+ENV QUARTO_VERSION=latest
 
 # install key dependencies of rstudio preview edition
 # install radian via python and pip3
@@ -18,6 +19,7 @@ RUN apt-get update \
 
 RUN /rocker_scripts/install_rstudio.sh
 RUN /rocker_scripts/install_pandoc.sh
+RUN /rocker_scripts/install_quarto.sh
 
 # install key dependencies of certain packages that could be installed later
 RUN apt-get update \
@@ -35,11 +37,6 @@ RUN apt-get update \
 RUN pip3 install radian
 
 RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
-
-# [Optional] Uncomment this section to add Quarto to the container
-# customize version number as appropriate
-RUN curl -L https://github.com/quarto-dev/quarto-cli/releases/download/v0.9.201/quarto-0.9.201-linux-amd64.deb -o /tmp/quarto.deb
-RUN apt-get -y install ./tmp/quarto.deb
 
 # [Optional] Uncomment this section to add addtional system dependencies needed for project
 # RUN apt-get update \
