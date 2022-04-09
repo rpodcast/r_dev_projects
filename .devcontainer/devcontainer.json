@@ -2,6 +2,9 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.134.1/containers/r
 {
 	"name": "R",
+	//"dockerComposeFile": "docker-compose.yml",
+	//"workspaceFolder": "/workspace",
+	//"service": "vscode",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
@@ -21,6 +24,18 @@
 		//"source=/media/media_drive1/obs_files/audio_assets/soundboard_files,target=/soundboard_files,type=bind,consistency=cached",
 		"source=/opt/local/renv/cache,target=/renv/cache,type=bind,consistency=cached"
 	],
+	"features": {
+		"common": {
+			"username": "${localEnv:USER}",
+			"uid": "1000",
+			"gid": "1000",
+			"installZsh": false,
+			"installOhMyZsh": false,
+			"upgradePackages": true,
+			"nonFreePackages": true
+		},
+		"fish": "latest"
+	},
 	// Configure environment variables for audio sound server if needed
 	// You can leave these commented out or delete if you are not linking the contianer to a linux sound system
 	//"containerEnv": {
