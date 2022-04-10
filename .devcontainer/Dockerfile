@@ -7,6 +7,12 @@ FROM rocker/r-ver:4.1.3
 
 # Options for setup script
 ARG USERNAME
+ARG INSTALL_ZSH="false"
+ARG USER_UID="1000"
+ARG USER_GID="1000"
+ARG UPGRADE_PACKAGES="false"
+ARG INSTALL_OHMYZSH="false"
+ARG INSTALL_NONFREE="false"
 ARG QUARTO_VERSION=latest
 
 # [Optional] Uncomment this section to install additional OS packages.
@@ -16,6 +22,9 @@ RUN apt-get update \
     && apt-get -y install --no-install-recommends software-properties-common wget libssl-dev libxml2-dev libcurl4-openssl-dev python3-pip pandoc libzip-dev \
     && apt-get -y install --no-install-recommends libfreetype6-dev libfontconfig1-dev tk \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+COPY library-scripts/common-debian.sh /tmp/library-scripts/
+RUN apt-get update && bash /tmp/library-scripts/common-debian.sh ${INSTALL_ZSH} ${USERNAME} ${USER_UID} ${USER_GID} ${UPGRADE_PACKAGES} ${INSTALL_OHMYZSH} ${INSTALL_NONFREE}
 
 # install R packages needed for VSCode interaction and package management
 RUN install2.r languageserver renv remotes httpgd
