@@ -4,35 +4,29 @@
 # - license: GPLV2
 ##################################################################################################################################################################
 
-FROM rocker/r-ver:4.1.0
+FROM rocker/r-ver:4.1.3
 
-ENV S6_VERSION=v1.21.7.0
-ENV RSTUDIO_VERSION=preview
+ARG S6_VERSION
+ARG RSTUDIO_VERSION
+ARG QUARTO_VERSION
+
+ENV S6_VERSION=$S6_VERSION
+ENV RSTUDIO_VERSION=$RSTUDIO_VERSION
 ENV PATH=/usr/lib/rstudio-server/bin:$PATH
+ENV QUARTO_VERSION=$QUARTO_VERSION
 
-# install key dependencies of rstudio preview edition
-# install radian via python and pip3
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends libpq5 openssh-client openssh-server
 
 RUN /rocker_scripts/install_rstudio.sh
 RUN /rocker_scripts/install_pandoc.sh
+RUN /rocker_scripts/install_quarto.sh
 
 # install key dependencies of certain packages that could be installed later
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends libxml2-dev libsodium-dev libssl-dev imagemagick libmagick++-dev libgit2-dev libssh2-1-dev zlib1g-dev librsvg2-dev libudunits2-dev libfontconfig1-dev libfreetype6-dev 
-
-# install R packages needed for VSCode interaction and package management
-RUN install2.r languageserver renv remotes
-
-# install radian via python and pip3
-RUN apt-get update \
-    && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends python3-setuptools python3-pip
-
-RUN pip3 install radian
+    && apt-get -y install --no-install-recommends libxml2-dev libsodium-dev libssl-dev imagemagick libmagick++-dev libgit2-dev libssh2-1-dev zlib1g-dev librsvg2-dev libudunits2-dev libfontconfig1-dev libfreetype6-dev curl 
 
 RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
 
@@ -40,6 +34,9 @@ RUN echo "RENV_PATHS_CACHE=/renv/cache" >> /usr/local/lib/R/etc/Renviron
 # RUN apt-get update \
 #     && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends ---packages list----
+
+# [Optional] Uncomment this section to install additional R packages.
+RUN install2.r --error --skipinstalled --ncpus -1 renv remotes
 
 EXPOSE 8787
 
