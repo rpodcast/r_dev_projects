@@ -5,42 +5,10 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"workspaceFolder": "/workspace",
 	"service": "vscode",
-	//"build": {
-	//	"dockerfile": "Dockerfile",
-	//	"args": {
-	//		"USERNAME": "${localEnv:USER}",
-	//		"QUARTO_VERSION": "${localEnv:QUARTO_VERSION}"
-	//	}
-	//},
-	// "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--env-file", ".devcontainer/.env" ],
 
-	// Add more local mounts to container
-	// The first mounts are for a local pulseaudio server on linux
-	// You can leave these commented out or delete if you are not linking the contianer to a linux sound system
-	// "mounts": [
-		//"source=/etc/alsa,target=/etc/alsa,type=bind,consistency=cached",
-		//"source=/usr/share/alsa,target=/usr/share/alsa,type=bind,consistency=cached",
-		//"source=/run/user/1000/pulse/native,target=/run/user/1000/pulse/native,type=bind,consistency=cached",
-		//"source=/media/media_drive1/obs_files/audio_assets/soundboard_files,target=/soundboard_files,type=bind,consistency=cached",
-	//	"source=/opt/local/renv/cache,target=/renv/cache,type=bind,consistency=cached"
-	// ],
 	"features": {
-		//"common": {
-		//	"username": "${localEnv:USER}",
-		//	"uid": "1000",
-		//	"gid": "1000",
-		//	"installZsh": false,
-		//	"installOhMyZsh": false,
-		//	"upgradePackages": true,
-		//	"nonFreePackages": true
-		//},
 		"fish": "latest"
 	},
-	// Configure environment variables for audio sound server if needed
-	// You can leave these commented out or delete if you are not linking the contianer to a linux sound system
-	//"containerEnv": {
-	//	"PULSE_SERVER": "unix:/run/user/1000/pulse/native"
-	//},
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
@@ -84,16 +52,16 @@
 		"Rubymaniac.vscode-paste-and-indent",
 		"GrapeCity.gc-excelviewer",
 		"IBM.output-colorizer",
-		"Mohamed-El-Fodil-Ihaddaden.shinysnip",
+		//"Mohamed-El-Fodil-Ihaddaden.shinysnip",
 		"hediet.vscode-drawio",
-		"MS-vsliveshare.vsliveshare-pack",
+		//"MS-vsliveshare.vsliveshare-pack",
 		"ms-python.python",
 		"RDebugger.r-debugger",
 		//"GitHub.copilot",
 		"eamodio.gitlens",
 		"GitHub.vscode-pull-request-github",
-		"quarto.quarto",
-		"hoovercj.vscode-power-mode"
+		"quarto.quarto"
+		//"hoovercj.vscode-power-mode"
 	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

@@ -19,14 +19,13 @@ services:
     command: sleep infinity
     env_file: .env
 
-  rstudioquarto:
+  rstudiodevcontainer:
     build:
       context: ./rstudio_docker
       args:
         S6_VERSION: ${S6_VERSION}
         RSTUDIO_VERSION: ${RSTUDIO_VERSION}
         QUARTO_VERSION: ${QUARTO_VERSION}
-    container_name: ${CONTAINER_NAME}
     volumes:
       - ${VOLUME_PATH}:${VOLUME_PATH}
       - /home/${USER}/.ssh:/home/${USER}/.ssh
