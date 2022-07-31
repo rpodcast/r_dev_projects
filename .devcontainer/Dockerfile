@@ -3,7 +3,7 @@
 # licence: MIT
 ###################################################################################################################
 
-FROM rocker/r-ver:4.1.3
+FROM rocker/r-ver:4.2.1
 
 # Options for setup script
 ARG USERNAME
