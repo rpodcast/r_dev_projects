@@ -21,18 +21,15 @@ This repo contains the various configurations, container settings, and other set
 
 The `.devcontainer` directory in this repository contains the custom configuration files and build instructions for creating the development container. The `Dockerfile` and `devcontainer.json` were adapted from the VSCode dev containers GitHub repository [here](https://github.com/microsoft/vscode-dev-containers/tree/master/containers/r). Highlights of the customizations I made:
 
-* Use the base Docker image of `rocker/r-ver:4.0.2` from the [Rocker Project](https://www.rocker-project.org/)
+* Use the base Docker image of `rocker/tidyverse:4.3` from the [Rocker Project](https://www.rocker-project.org/)
 * Install the [Fish](https://fishshell.com/) shell instead of [ZSH](http://zsh.sourceforge.net/) 
 * Install additional OS libraries to make installation of R package binaries relatively painless
 * Install the [radian](https://github.com/randy3k/radian) alternative R console
 * Install `renv` 
-* Install certain dotnet core runtime packages (this may not be necessary in future)
 * Configure environment variables for custom location of `renv` cache directory mounted into the container
-* Set the default user as my user account and not root
 
 With everything set up, I was able to mostly follow the official VS Code documenation page on [developing inside a container](https://code.visualstudio.com/docs/remote/containers) to get the development container launched. I am still learning the ropes so to speak with day-to-day usage of VS-Code with R coding.  Here are some additional observations that I will update as I continue my journey:
 
-+ There have been some random occurrances where I cannot view a Shiny app in a tab within VS Code when launching the app (the tab appears completely blank).  However, when I click the notification in the lower-corner to open the link in an external browser, the app loads just fine.  The only way I have found to at least manually fix the problem in the active session is to perform the workaround documented in [vscode-R/380](https://github.com/Ikuyadeu/vscode-R/issues/380#issuecomment-657890970) .  Basically, run `options(vsc.browser=FALSE)` once in the R session, then run the application (which will open the app in an external window).  Close the app, then run `options(vsc.browser="Active")` in the R session, and then run the app again.  The app should open in the VS-Code tab like usual.
 * The default linting is based on the [`{lintr}`](https://github.com/jimhester/lintr) package and might need some tweaking.  Consult the [project configuration](https://github.com/jimhester/lintr#project-configuration) of the `lintr` repository for more infomation.
 
 ## RStudio Setup
@@ -43,7 +40,6 @@ In recent years, the open-source version of RStudio Server has been succesfully 
 * Install the [radian](https://github.com/randy3k/radian) alternative R console
 * Configure environment variables for custom location of `renv` cache directory mounted into the container
 * Install `renv`
-* Store certain environment variables inside a custom text file called `rstudio.env`
 
 ## Configuring a central package cache 
 
@@ -57,45 +53,7 @@ RENV_PATHS_CACHE=/renv/cache
 
 ## Using Renv with VS-Code
 
-One (intentional) effect of using `renv` is that out of the box the project's package library will not link to packages in the default library that are not included in the base installation of R. The interactions between an R session and VS-Code are largely driven by the [`{launguageserver}`](https://github.com/REditorSupport/languageserver) package available on CRAN. My solution to ensure any project with `renv` enabled can use all of the same integrations with VS-Code is to create a custom `.Rprofile` that contains certain triggers to bootstrap the installation of `languageserver` and perform necessary environment configurations if the session detects that the `TERM_PROGRAM` environment variable is set to `vscode`. The file [`.devcontainer/library-scripts/.Rprofile-vscode`](https://github.com/rpodcast/r_dev_projects/blob/master/.devcontainer/library-scripts/.Rprofile-vscode) is automatically copied to the container's `renv` cache directory, and can be manually copied to overwrite the current project's `.Rprofile` file.  Much of this solution was adapted from ideas discussed in issue [vscode-R/259](https://github.com/Ikuyadeu/vscode-R/issues/259). The contents are below:
-
-```r
-# setup if using with vscode and R plugin
-if (Sys.getenv("TERM_PROGRAM") == "vscode") {
-    source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))
-}
-source("renv/activate.R")
-
-if (Sys.getenv("TERM_PROGRAM") == "vscode") {
-    # obtain list of packages in renv library currently
-    project <- renv:::renv_project_resolve(NULL)
-    lib_packages <- names(unclass(renv:::renv_diagnostics_packages_library(project))$Packages)
-
-    # detect whether key packages are already installed
-    # was: !require("languageserver")
-    if (!"languageserver" %in% lib_packages) {
-        message("installing languageserver package")
-        renv::install("languageserver")
-    }
-    
-    if (!"httpgd" %in% lib_packages) {
-        message("installing httpgd package")
-        renv::install("nx10/httpgd")
-    }
-
-    if (!"vscDebugger %in% lib_packages) {
-        message("installation vscDebugger package")
-        renv::install("ManuelHentschel/vscDebugger@v0.4.3")
-    }
-
-    # use the new httpgd plotting device
-    options(vsc.plot = FALSE)
-    options(device = function(...) {
-      httpgd::httpgd()
-      .vsc.browser(httpgd::httpgdURL(), viewer = "Beside")
-    })
-}
-```
+The `renv` package now works well within Visual Studio Code, but you need to make a small configuration tweak in the R Extension settings as detailed in the vscode-R wiki article here: <https://github.com/REditorSupport/vscode-R/wiki/Working-with-renv-enabled-projects>. This was the only tweak necessary within my setup.
 
 ## Next Steps
 
