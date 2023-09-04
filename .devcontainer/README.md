@@ -32,6 +32,13 @@ With everything set up, I was able to mostly follow the official VS Code documen
 
 * The default linting is based on the [`{lintr}`](https://github.com/jimhester/lintr) package and might need some tweaking.  Consult the [project configuration](https://github.com/jimhester/lintr#project-configuration) of the `lintr` repository for more infomation.
 
+## Accessing Visual Studio Code Container
+
+1. Launch Visual Studio Code 
+1. Open the folder where you cloned this repository. Note that you do not open the `.devcontainer` folder, since the Remote extension will recognize this folder automatically.
+1. The container images will be built with Docker, and depending on bandwidth it could take some time. Note that the container build will be cached for future use.
+1. After the build process completes, Visual Studio Code will refresh and use the container runtime. You may need to launch the terminal separate if it does not load automatically.
+
 ## RStudio Setup
 
 In recent years, the open-source version of RStudio Server has been succesfully integrated into Docker containers in multiple projects including the excellent [Rocker Project](https://www.rocker-project.org/) led by Carl Boettiger, Dirk Eddelbuettel, and Noam Ross. Recently, they created version-stable R containers based on R version 4.0.0 or later at the [rocker-org/rocker-versioned2](https://github.com/rocker-org/rocker-versioned2) GitHub repository based on the recent Ubuntu 20.04 LTS release, as well as integrated the new [RStudio Package Manager (RSPM)](https://packagemanager.rstudio.com/) which hosts compiled binaries of R packages for installation on Linux. I decided to create a custom container for RStudio server following principles in their [new infrastructure](https://github.com/rocker-org/rocker-versioned2#modifying-and-extending-images-in-the-new-architecture) with a custom `Dockerfile` inspired by their [`Dockerfile_rstudio_4.0.2`](https://github.com/rocker-org/rocker-versioned2/blob/master/dockerfiles/Dockerfile_rstudio_4.0.2), and wrapping the execution within [Docker Compose](https://docs.docker.com/compose/).  Highlights of the customizations I implemented:
@@ -40,6 +47,11 @@ In recent years, the open-source version of RStudio Server has been succesfully 
 * Install the [radian](https://github.com/randy3k/radian) alternative R console
 * Configure environment variables for custom location of `renv` cache directory mounted into the container
 * Install `renv`
+
+## Accessing RStudio Container
+
+1. Follow the procedure above for launching the Visual Studio Code container. Even though you will be using the RStudio container server, you still need to get the container launched through Visual Studio Code
+1. Open a web browser and type the following in the address bar, substituting the port number with the number listed on the left side of the `ports` directive in the `docker-compose.yml` configuration file: `http://localhost:port_number`. For example, the default port specified in this repository is `9998`, hence you would use the address `http://localhost:9998` in the address bar if you keep that port unchanged.
 
 ## Configuring a central package cache 
 
