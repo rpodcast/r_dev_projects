@@ -24,6 +24,6 @@ RUN apt-get update \
 #  && apt-get -y install ./tmp/chrome.deb
 
 # install R package dependencies
-# add / remove packages from line below (but keep httpgd, renv, languageserver
-RUN install2.r renv httpgd languageserver
+# add / remove packages from line below (but keep renv=
+RUN install2.r renv 
 

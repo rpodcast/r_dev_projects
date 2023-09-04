@@ -1,16 +1,12 @@
-version: '3.4'
+version: '3.8'
 
 services:
   vscode:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        USERNAME: ${USER}
-        QUARTO_VERSION: ${QUARTO_VERSION}
-    user: ${USER}
     volumes:
-      - ..:/workspace:cached
+      - ../..:/workspaces:cached
       - ${RENV_PATHS_CACHE_HOST}:/renv/cache
     cap_add:
       - SYS_PTRACE
@@ -21,18 +17,15 @@ services:
 
   rstudiodevcontainer:
     build:
-      context: ./rstudio_docker
-      args:
-        S6_VERSION: ${S6_VERSION}
-        RSTUDIO_VERSION: ${RSTUDIO_VERSION}
-        QUARTO_VERSION: ${QUARTO_VERSION}
+      context: .
+      dockerfile: Dockerfile_rstudio
     volumes:
-      - ${VOLUME_PATH}:${VOLUME_PATH}
-      - /home/${USER}/.ssh:/home/${USER}/.ssh
-      - ${RENV_PATHS_CACHE_HOST}:${RENV_PATHS_CACHE_CONTAINER}
-      - ${VOLUME_PATH}/.devcontainer/rstudio_config_dir:/home/${USER}/.config/rstudio
+      - ..:/home/rstudio/workspaces:cached
+      - ${RENV_PATHS_CACHE_HOST}:/renv/cache
+      - ./.rstudio_config:/home/rstudio/.config/rstudio
     restart:
       unless-stopped
+    # change local port number if needed. Keep container port (8787) the same.
     ports:
-      - ${LOCAL_PORT}:8787
+      - 9998:8787
     env_file: .env

@@ -1,76 +1,54 @@
-// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.134.1/containers/r
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/rocker-org/devcontainer-templates/tree/main/src/r-ver
+// Change the 'name' field to suit your project
 {
-	"name": "R",
+	"name": "R-Dev-Projects (rocker/r-ver base)",
 	"dockerComposeFile": "docker-compose.yml",
-	"workspaceFolder": "/workspace",
 	"service": "vscode",
-
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	//"image": "ghcr.io/rocker-org/devcontainer/r-ver:4.3",
+	// Add features to be automatically installed in the containers
+	// See https://code.visualstudio.com/blogs/2022/09/15/dev-container-features for more information
 	"features": {
-		"fish": "latest"
+		"ghcr.io/rocker-org/devcontainer-features/pandoc:1": {},
+		"ghcr.io/meaningful-ooo/devcontainer-features/fish:1": {},
+		"ghcr.io/guiyomh/features/vim:0": {}
 	},
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"terminal.integrated.profiles.linux": {
-			"fish": {
-				"path": "/usr/bin/fish"
-			}
-		},
-		"terminal.integrated.defaultProfile.linux": "fish",
-		"r.alwaysUseActiveTerminal": true,
-  		"r.bracketedPaste": true,
-		"r.sessionWatcher": true,
-		"r.rterm.linux": "/usr/local/bin/radian",
-		"r.rterm.option": [
-			""
-		],
-		"r.autoDetect": "false",
-		"r.terminalPath": "/usr/local/bin/radian",
-		"r.interpreterPath": "/usr/local/bin/R",
-		"r.debugger.timeouts.startup": 8000,
-		"r.lsp.enabled": true,
-		"editor.wordWrap": "on",
-		"editor.tabSize": 2,
-		"path-autocomplete.pathMappings": {
-    			"/": "/",
-    			"./": "${folder}"
-		},
-		"editor.bracketPairColorization.enabled": true,
-		"editor.guides.bracketPairs": "active"
-	},
-
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"REditorSupport.r",
-		//"/renv/cache/r-latest.vslx",
-		"ionutvmi.path-autocomplete",
-		"usernamehw.errorlens",
-		"mhutchie.git-graph",
-		"wayou.vscode-todo-highlight",
-		"tomoki1207.pdf",
-		"DavidAnson.vscode-markdownlint",
-		"Rubymaniac.vscode-paste-and-indent",
-		"GrapeCity.gc-excelviewer",
-		"IBM.output-colorizer",
-		//"Mohamed-El-Fodil-Ihaddaden.shinysnip",
-		"hediet.vscode-drawio",
-		//"MS-vsliveshare.vsliveshare-pack",
-		"ms-python.python",
-		"RDebugger.r-debugger",
-		//"GitHub.copilot",
-		"eamodio.gitlens",
-		"GitHub.vscode-pull-request-github",
-		"quarto.quarto"
-		//"hoovercj.vscode-power-mode"
-	]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "R --version",
+	// "postCreateCommand": "R -q -e 'renv::install()'",
 
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "docker"
+	// Configure tool-specific properties.
+	// Add / remove extensions as desired
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ionutvmi.path-autocomplete",
+				"hoovercj.vscode-power-mode",
+				"REditorSupport.r",
+				"hediet.vscode-drawio",
+				"redhat.vscode-yaml",
+				"codezombiech.gitignore",
+				"ms-python.python",
+			],
+			"settings": {
+				"editor.wordWrap": "on",
+				"editor.tabSize": 2,
+				"path-autocomplete.pathMappings": {
+						"/": "/",
+						"./": "${folder}"
+				},
+				"editor.bracketPairColorization.enabled": true,
+				"editor.guides.bracketPairs": "active"
+			}
+		}
+	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }

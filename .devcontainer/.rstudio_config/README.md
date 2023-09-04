@@ -1,0 +1,1 @@
+Custom RStudio preferences are stored in this directory when running the RStudio container image.
