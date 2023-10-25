@@ -8,4 +8,4 @@
 # container-specific files
 .devcontainer/.rstudio_config/*
 !.devcontainer/.rstudio_config/README.md
-.env
+.devcontainer/.env
